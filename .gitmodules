@@ -1,0 +1,6 @@
+[submodule "web/extensions"]
+	path = web/extensions
+	url = https://github.com/lyoj-dev/lyoj-ext.git
+[submodule "web/lang"]
+	path = web/lang
+	url = https://github.com/lyoj-dev/lyoj-lang.git

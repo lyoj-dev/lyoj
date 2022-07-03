@@ -1,0 +1,701 @@
+{
+    "web":{
+        "name":"LYOJ",
+        "title":"LYOJ | LittleYang Online Judge",
+        "absolute_path":true,
+        "protocol":"http",
+        "domain":"",
+        "icon":"./logo.png",
+        "logo":"./logo.png",
+        "default_path":"index",
+        "url_rewrite":true,
+        "rsa_private_key":"/etc/judge/web/rsa_private_key.pem",
+        "rsa_public_key":"/etc/judge/web/rsa_public_key.pem",
+        "cookie_time":2592000,
+        "timezone":"Asia/Chongqing",
+        "install":1,
+        "menu":{
+            "left":[
+                {
+                    "path":"index",
+                    "param":{
+
+                    }
+                },
+                {
+                    "path":"problem",
+                    "param":{
+                        "page":"1"
+                    }
+                },
+                {
+                    "path":"status",
+                    "param":{
+                        "page":"1"
+                    }
+                },
+                {
+                    "path":"contest",
+                    "param":{
+
+                    }
+                }
+            ],
+            "right":[
+                {
+                    "path":"login",
+                    "param":{
+                        
+                    }
+                },
+                {
+                    "path":"register",
+                    "param":{
+
+                    }
+                }
+            ]
+        },
+        "footer":[
+            {
+                "title":"My Website",
+                "url":{
+                    "Yucai News Weekly":"https://www.littleyang.ml",
+                    "LittleYang0531's Blog":"https://blog.littleyang.ml",
+                    "Public Image Repository":"https://pic.littleyang.ml",
+                    "Image Website for My Class":"https://photo.littleyang.ml",
+                    "Gitea for LittleYang":"https://git.littleyang.ml",
+                    "Tool Website":"https://tools.littleyang.ml"
+                }
+            },
+            {
+                "title":"My Repository",
+                "url":{
+                    "News Website":"https://github.com/LittleYang0531/News-Website",
+                    "LittleYang Onlinejudge":"https://github.com/LittleYang0531/lyoj"
+                }
+            },
+            {
+                "title":"About Me",
+                "url":{
+                    "My Github":"https://github.com/LittleYang0531",
+                    "My Email":"mailto:admin@littleyang.ml",
+                    "Feedback Email":"mailto:feedback@littleyang.ml"
+                }
+            }
+        ],
+        "font":{
+            "Exo 2":"./font/exo2.woff2"
+        },
+        "lang":{
+            "zh-cn":"./lang/zh-cn.json",
+            "en-us":"./lang/en-us.json",
+            "ja-jp":"./lang/ja-jp.json"
+        },
+        "default-lang":"en-us"
+    },
+    "controllers": {
+        "index":{
+            "entrance_function":"run",
+            "require":[
+                "./cores/guipages/index.php"
+            ],
+            "require_param":{
+                
+            },
+            "require_config":["announcement_content"],
+            "configs":{
+                "announcement_content":"/etc/judge/announcement.md"
+            },
+            "rewrite_param":[]
+        },
+        "error":{
+            "entrance_function":"error_page",
+            "require":[
+                "./cores/guipages/error.php",
+                "./cores/controllers/error.php"
+            ],
+            "require_param":{
+                "err":""
+            },
+            "require_config":[],
+            "configs":{
+
+            },
+            "rewrite_param":[]
+        },
+        "problem":{
+            "entrance_function":"run",
+            "require":[
+                "./cores/controllers/database.php",
+                "./cores/controllers/problem.php",
+                "./cores/controllers/status.php",
+                "./cores/controllers/tags.php",
+                "./cores/controllers/user.php",
+                "./cores/controllers/error.php",
+                "./cores/controllers/contest.php",
+                "./cores/guipages/problem.php"
+            ],
+            "require_param":{
+                "page":1
+            },
+            "require_config":["number_of_pages","auto-render.min.js_path"],
+            "configs":{
+                "number_of_pages":10,
+                "auto-render.min.js_path":"https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+            },
+            "rewrite_param":["id"]
+        },
+        "status":{
+            "entrance_function":"run",
+            "require":[
+                "./cores/controllers/error.php",
+                "./cores/controllers/database.php",
+                "./cores/controllers/status.php",
+                "./cores/controllers/user.php",
+                "./cores/controllers/problem.php",
+                "./cores/controllers/contest.php",
+                "./cores/guipages/status.php"
+            ],
+            "require_param":{
+
+            },
+            "require_config":["number_of_pages"],
+            "configs":{
+                "number_of_pages":10
+            },
+            "rewrite_param":["id"]
+        },
+        "login":{
+            "entrance_function":"run",
+            "require":[
+                "./cores/controllers/database.php",
+                "./cores/controllers/user.php",
+                "./cores/guipages/login.php"
+            ],
+            "require_param":{
+                "return":""
+            },
+            "require_config":[],
+            "configs":{
+
+            },
+            "rewrite_param":[]
+        },
+        "register":{
+            "entrance_function":"run",
+            "require":[
+                "./cores/controllers/database.php",
+                "./extensions/PHPMailer/Exception.php",
+                "./extensions/PHPMailer/OAuthTokenProvider.php",
+                "./extensions/PHPMailer/OAuth.php",
+                "./extensions/PHPMailer/PHPMailer.php",
+                "./extensions/PHPMailer/POP3.php",
+                "./extensions/PHPMailer/SMTP.php",
+                "./cores/controllers/email.php",
+                "./cores/controllers/user.php",
+                "./cores/guipages/register.php"
+            ],
+            "require_param":{
+                
+            },
+            "require_config":["email_content","email_host","email_name","email_password","email_protocol","email_port","email_from"],
+            "configs":{
+                "email_content":"/etc/judge/email.html",
+                "email_host":"smtp.qq.com",
+                "email_name":"littleyang0531@foxmail.com",
+                "email_password":"alnjftqyxjpuchhh",
+                "email_protocol":"ssl",
+                "email_port":465,
+                "email_from":"LittleYang0531"
+            },
+            "rewrite_param":[]
+        },
+        "contest":{
+            "entrance_function":"run",
+            "require":[
+                "./cores/controllers/database.php",
+                "./cores/controllers/contest.php",
+                "./cores/controllers/tags.php",
+                "./cores/controllers/user.php",
+                "./cores/controllers/problem.php",
+                "./cores/controllers/status.php",
+                "./cores/guipages/contest.php"
+            ],
+            "require_param":{
+                "page":1
+            },
+            "require_config":["number_of_pages","ranking_number","status_number"],
+            "configs":{
+                "number_of_pages":10,
+                "ranking_number":10,
+                "status_number":10
+            },
+            "rewrite_param":["id","page"]
+        },
+        "user":{
+            "entrance_function":"run",
+            "require":[
+                "./cores/controllers/database.php",
+                "./cores/controllers/user.php",
+                "./cores/controllers/status.php",
+                "./cores/controllers/contest.php",
+                "./cores/controllers/problem.php",
+                "./cores/guipages/user.php"
+            ],
+            "require_param":{},
+            "require_config":[],
+            "configs":{},
+            "rewrite_param":["id"]
+        },
+        "admin":{
+            "entrance_function":"run",
+            "require":[
+                "./cores/controllers/database.php",
+                "./cores/controllers/admin.php",
+                "./cores/controllers/email.php",
+                "./cores/controllers/user.php",
+                "./cores/controllers/problem.php",
+                "./cores/controllers/status.php",
+                "./cores/controllers/tags.php",
+                "./cores/controllers/error.php",
+                "./cores/controllers/contest.php",
+                "./cores/guipages/admin.php"
+            ],
+            "require_param":{},
+            "require_config":["hitokoto_link","problem_of_pages"],
+            "configs":{
+                "hitokoto_link":"https://v1.hitokoto.cn/?c=a&c=b",
+                "problem_of_pages":10,
+                "contest_of_pages":10,
+                "user_of_pages":10
+            },
+            "rewrite_param":["page"]
+        },
+        "install":{
+            "entrance_function":"run",
+            "require":[
+                "./cores/guipages/install.php"
+            ],
+            "require_param":{},
+            "require_config":["hitokoto_link"],
+            "configs":{
+                "hitokoto_link":"https://v1.hitokoto.cn/?c=a&c=b"
+            },
+            "rewrite_param":[]
+        },
+        "passwd":{
+            "entrance_function":"run",
+            "require":[
+                "./cores/controllers/database.php",
+                "./cores/controllers/user.php",
+                "./cores/controllers/error.php",
+                "./cores/guipages/passwd.php"
+            ],
+            "require_param":{},
+            "require_config":[],
+            "configs":{
+
+            },
+            "rewrite_param":[]
+        }
+    },
+    "extensions":{
+        "js":{
+            "jquery.min.js":"./extensions/jquery.min.js",
+            "katex.min.js":"./extensions/katex/katex.min.js",
+            "editormd.js":"./extensions/editor.md/editormd.js",
+            "codemirror.min.js":"./extensions/editor.md/lib/codemirror/codemirror.min.js",
+            "modes.min.js":"./extensions/editor.md/lib/codemirror/modes.min.js",
+            "addons.min.js":"./extensions/editor.md/lib/codemirror/addons.min.js",
+            "marked.min.js":"./extensions/editor.md/lib/marked.min.js",
+            "prettify.min.js":"./extensions/editor.md/lib/prettify.min.js",
+            "raphael.min.js":"./extensions/editor.md/lib/raphael.min.js",
+            "underscore.min.js":"./extensions/editor.md/lib/underscore.min.js",
+            "flowchart.min.js":"./extensions/editor.md/lib/flowchart.min.js",
+            "jquery.flowchart.min.js":"./extensions/editor.md/lib/jquery.flowchart.min.js",
+            "sequence-diagram.min.js":"./extensions/editor.md/lib/sequence-diagram.min.js",
+            "code-block-dialog.js":"./extensions/editor.md/plugins/code-block-dialog/code-block-dialog.js",
+            "emoji-dialog.js":"./extensions/editor.md/plugins/emoji-dialog/emoji-dialog.js",
+            "goto-line-dialog.js":"./extensions/editor.md/plugins/goto-line-dialog/goto-line-dialog.js",
+            "help-dialog.js":"./extensions/editor.md/plugins/help-dialog/help-dialog.js",
+            "html-entities-dialog.js":"./extensions/editor.md/plugins/html-entities-dialog/html-entities-dialog.js",
+            "image-dialog.js":"./extensions/editor.md/plugins/image-dialog/image-dialog.js",
+            "link-dialog.js":"./extensions/editor.md/plugins/link-dialog/link-dialog.js",
+            "preformatted-text-dialog.js":"./extensions/editor.md/plugins/preformatted-text-dialog/preformatted-text-dialog.js",
+            "reference-link-dialog.js":"./extensions/editor.md/plugins/reference-link-dialog/reference-link-dialog.js",
+            "table-dialog.js":"./extensions/editor.md/plugins/table-dialog/table-dialog.js",
+            "monaco-editor-loader.js":"./extensions/monaco-editor/min/vs/loader.js",
+            "monaco-editor-lang-pack":"./extensions/monaco-editor/min/vs/editor/editor.main.nls.zh-cn.js",
+            "monaco-editor-main.js":"./extensions/monaco-editor/min/vs/editor/editor.main.js",
+            "layui.js":"./extensions/layui/layui.js",
+            "highlight.min.js":"./extensions/highlight.js/highlight.min.js"
+        },
+        "css":{
+            "katex.min.css":"./extensions/katex/katex.min.css",
+            "codemirror.min.css":"./extensions/editor.md/lib/codemirror/codemirror.min.css",
+            "dialog.css":"./extensions/editor.md/lib/codemirror/addon/dialog/dialog.css",
+            "matchesonscrollbar.css":"./extensions/editor.md/lib/codemirror/addon/search/matchesonscrollbar.css",
+            "foldgutter.css":"./extensions/editor.md/lib/codemirror/addon/fold/foldgutter.css",
+            "editormd.css":"./extensions/editor.md/css/editormd.css",
+            "monaco-editor-main.css":"./extensions/monaco-editor/min/vs/editor/editor.main.css",
+            "icon.css":"./extensions/UI-Icon-master/icon.css",
+            "highlight.min.css":"./extensions/highlight.js/styles/github.min.css"
+        }
+    },
+    "difficulties":[
+        {
+            "name":"暂无评定",
+            "color":"rgb(191,191,191)"
+        },
+        {
+            "name":"入门",
+            "color":"rgb(254,76,97)"
+        },
+        {
+            "name":"普及-",
+            "color":"rgb(243,156,17)"
+        },
+        {
+            "name":"普及/提高-",
+            "color":"rgb(255,193,22)"
+        },
+        {
+            "name":"普及+/提高",
+            "color":"rgb(82,196,26)"
+        },
+        {
+            "name":"提高+/省选-",
+            "color":"rgb(52,152,219)"
+        },
+        {
+            "name":"省选/NOI-",
+            "color":"rgb(157,61,207)"
+        },
+        {
+            "name":"NOI/NOI+/CTSC",
+            "color":"rgb(14,29,105)"
+        }
+    ],
+    "require_code":[
+        "./cores/controllers/api.php",
+        "./cores/controllers/database.php",
+        "./extensions/PHPMailer/Exception.php",
+        "./extensions/PHPMailer/OAuthTokenProvider.php",
+        "./extensions/PHPMailer/OAuth.php",
+        "./extensions/PHPMailer/PHPMailer.php",
+        "./extensions/PHPMailer/POP3.php",
+        "./extensions/PHPMailer/SMTP.php",
+        "./extensions/ZipFile/ZipFile.php",
+        "./cores/controllers/email.php",
+        "./cores/controllers/user.php",
+        "./cores/controllers/problem.php",
+        "./cores/controllers/status.php",
+        "./cores/controllers/tags.php",
+        "./cores/controllers/error.php",
+        "./cores/controllers/contest.php",
+        "./cores/controllers/admin.php"
+    ],
+    "skip_config_check":["error"],
+    "version":"1.0.0-dev",
+    "mysql":{
+        "server":"127.0.0.1",
+        "port":3306,
+        "user":"root",
+        "passwd":"",
+        "database":"judge"
+    },
+    "spj":[
+        {
+            "path":"./spjtemp/1",
+            "name":"1"
+        },{
+            "path":"./spjtemp/2",
+            "name":"2"
+        }
+    ],
+    "lang":[
+    {
+        "name":"C++98 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++98 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C++98 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++98 -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C++03 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++03 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C++03 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++03 -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C++11 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++11 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C++11 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++11 -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C++14 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++14 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C++14 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++14 -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C++17 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++17 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C++17 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++17 -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+    	"name":"C++20 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++2a -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C++20 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.cpp",
+        "command":"g++ main.cpp -o main -std=c++2a -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C89 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c89 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C89 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c89 -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C90 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c90 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C90 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c90 -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C99 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c99 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C99 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c99 -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C11 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c11 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C11 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c11 -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C17 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c17 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C17 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c17 -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C18 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c18 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C18 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c18 -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C20 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c2x -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"C20 O2 (gcc9.3.0 amd64)",
+	    "type":0,
+        "mode":"c",
+        "highlight-mode":"c",
+        "source_path":"main.c",
+        "command":"gcc main.c -o main -std=c2x -O2 -DONLINE_JUDGE -Wall -fno-asm -lm -march=native ",
+        "exec_command":"./main"
+    },{
+        "name":"Pascal (fpc3 amd64)",
+        "type":0,
+        "mode":"cpp",
+        "highlight-mode":"cpp",
+        "source_path":"main.pas",
+        "command":"fpc main.pas -omain -dONLINE_JUDGE -vnw",
+        "exec_command":"./main"
+    },{
+        "name":"jdk8 (openjdk-8 amd64)",
+        "type":2,
+        "mode":"java",
+        "highlight-mode":"java",
+        "source_path":"main.java",
+        "command":"javac8 main.java",
+        "exec_command":"/usr/bin/java8 main"
+    },{
+        "name":"jdk11 (openjdk-11 amd64)",
+        "type":1,
+        "mode":"java",
+        "highlight-mode":"java",
+        "source_path":"main.java",
+        "exec_command":"/usr/bin/java11 main.java"
+    },{
+        "name":"jdk13 (openjdk-13 amd64)",
+        "type":1,
+        "mode":"java",
+        "highlight-mode":"java",
+        "source_path":"main.java",
+        "exec_command":"/usr/bin/java13 main.java"
+    },{
+        "name":"jdk16 (openjdk-16 amd64)",
+        "type":1,
+        "mode":"java",
+        "highlight-mode":"java",
+        "source_path":"main.java",
+        "exec_command":"/usr/bin/java16 main.java"
+    },{
+        "name":"jdk17 (openjdk-17 amd64)",
+        "type":1,
+        "mode":"java",
+        "highlight-mode":"java",
+        "source_path":"main.java",
+        "exec_command":"/usr/bin/java17 main.java"
+    },{
+        "name":"php7.4 (php7.4 amd64)",
+        "type":1,
+        "mode":"php",
+        "highlight-mode":"php",
+        "source_path":"main.php",
+        "exec_command":"/usr/bin/php7.4 main.php"
+    },{
+        "name":"php8.1 (php8.1 amd64)",
+        "type":1,
+        "mode":"php",
+        "highlight-mode":"php",
+        "source_path":"main.php",
+        "exec_command":"/usr/bin/php8.1 main.php"
+    },{
+        "name":"Python2 (python2 amd64)",
+        "type":1,
+        "mode":"python",
+        "highlight-mode":"python",
+        "source_path":"main.py",
+        "exec_name":"python2",
+        "exec_command":"/usr/bin/python2 main.py"
+    },{
+        "name":"Python3 (python3 amd64)",
+        "type":1,
+        "mode":"python",
+        "highlight-mode":"python",
+        "source_path":"main.py",
+        "exec_command":"/usr/bin/python3 main.py"
+    }],
+    "default_lang":6
+}
