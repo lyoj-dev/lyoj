@@ -1,0 +1,11 @@
+CREATE TABLE contest (id int(255) NULL,title longtext NULL,starttime int(20) NULL,duration int(20) NULL,type int(11) NULL,rated tinyint(1) NULL DEFAULT 0,lang varchar(1024) NULL);
+CREATE TABLE contest_problem (pid int(255) NULL,id int(255) NULL);
+CREATE TABLE contest_ranking (id int(255) NULL,uid int(255) NULL,score int(255) NULL,time int(255) NULL,info longtext NULL,penalty int(255) NULL);
+CREATE TABLE contest_signup (id int(255) NULL,uid int(255) NULL);
+CREATE TABLE crontab (id int(255) NULL,duration int(20) NULL,lasttime int(20) NULL,command longtext NULL,name longtext NULL);
+CREATE TABLE judger (id varchar(128) NULL,config longtext NULL,name longtext NULL,heartbeat int(20) NULL);
+CREATE TABLE logindata (uid int(255) NULL,csrf longtext NULL,sessdata longtext NULL,time int(20) NULL);
+CREATE TABLE problem (id int(255) NULL,name longtext NULL,bg longtext NULL,descrip longtext NULL,input longtext NULL,output longtext NULL,cases longtext NULL,hint longtext NULL,hidden tinyint(1) NULL DEFAULT 0,banned tinyint(1) NULL DEFAULT 0,difficult int(11) NULL DEFAULT 0,contest int(255) NULL DEFAULT 0,pid int(255) NULL DEFAULT 0);
+CREATE TABLE status (id int(255) NULL,uid int(255) NULL,pid int(255) NULL,lang int(11) NULL,code longtext NULL,result longtext NULL,time int(11) NULL,status longtext NULL,ideinfo longtext NULL,judged tinyint(1) NULL,contest int(255) NULL);
+CREATE TABLE tags (tagname longtext NULL,id int(255) NULL,type varchar(255) NULL);
+CREATE TABLE user (id int(255) NULL,name varchar(255) NULL,passwd longtext NULL,title varchar(255) NULL,permission int(10) NULL,email longtext NULL,salt longtext NULL,salttime int(20) NULL,verify tinyint(1) NULL,verify_code varchar(200) NULL,rating int(255) NULL,uptime int(20) NULL,banned tinyint(1) NULL,passwd_token varchar(1024) NULL);
